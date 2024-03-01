@@ -15,7 +15,7 @@ const IndexPage = ({ data }) => {
   return (
     <div>
       <h1>hello world</h1>
-      <div className="container">
+      <div className="cards-container">
         {products.map(product => (
           <Card product={product} />
         ))}
@@ -57,7 +57,9 @@ function Card({ product }) {
   return (
     <div className="card">
       <img src={product.preview[0].thumbnails.large.url} />
-      <h2>{product.name}</h2>
+      <div className="title-container">
+        <h2>{product.name}</h2>
+      </div>
     </div>
   )
 }
