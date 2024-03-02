@@ -5,6 +5,10 @@
   box-sizing: border-box;
 }
 
+a {
+  color: inherit;
+}
+
 .cards-container {
   display: flex;
   flex-wrap: wrap;

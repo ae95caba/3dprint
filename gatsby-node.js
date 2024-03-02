@@ -1,5 +1,6 @@
 const crypto = require("crypto")
-
+const path = require(`path`)
+const { nameToPath } = require(`./src/functions/nameToPath.js`)
 exports.sourceNodes = async ({ actions }) => {
   const { createNode } = actions
 
@@ -64,4 +65,24 @@ exports.sourceNodes = async ({ actions }) => {
   }
 
   return
+}
+
+exports.createPages = async ({ graphql, actions }) => {
+  const { data } = await graphql(`
+    query {
+      names: allProduct {
+        nodes {
+          name
+        }
+      }
+    }
+  `)
+
+  data.names.nodes.forEach(node =>
+    actions.createPage({
+      path: `/${nameToPath(node.name)}`,
+      component: path.resolve(`./src/templates/ProductDetails.js`),
+      context: { slug: `` },
+    })
+  )
 }

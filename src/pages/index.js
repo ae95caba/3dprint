@@ -2,7 +2,7 @@ import * as React from "react"
 import { Link } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
 import { graphql } from "gatsby"
-
+import { nameToPath } from "../functions/nameToPath"
 import Seo from "../components/seo"
 import "../index.scss"
 
@@ -12,6 +12,7 @@ const IndexPage = ({ data }) => {
   console.log(JSON.stringify(data))
   const products = data.products.nodes
   console.log(products)
+
   return (
     <div>
       <h1>hello world</h1>
@@ -55,11 +56,13 @@ export const query = graphql`
 
 function Card({ product }) {
   return (
-    <div className="card">
-      <img src={product.preview[0].thumbnails.large.url} />
-      <div className="title-container">
-        <h2>{product.name}</h2>
+    <Link to={nameToPath(product.name)}>
+      <div className="card">
+        <img src={product.preview[0].thumbnails.large.url} />
+        <div className="title-container">
+          <h2>{product.name}</h2>
+        </div>
       </div>
-    </div>
+    </Link>
   )
 }
