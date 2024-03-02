@@ -82,7 +82,7 @@ exports.createPages = async ({ graphql, actions }) => {
     actions.createPage({
       path: `/${nameToPath(node.name)}`,
       component: path.resolve(`./src/templates/ProductDetails.js`),
-      context: { slug: `` },
+      context: { name: node.name },
     })
   )
 }
