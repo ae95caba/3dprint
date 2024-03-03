@@ -1,12 +1,8 @@
 import React from "react"
 import { graphql } from "gatsby"
-import { Swiper, SwiperSlide } from "swiper/react"
-
-// Import Swiper styles
-import "swiper/css"
 
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
-import "../../node_modules/react-image-gallery/styles/css/image-gallery.css"
+
 import { useRef } from "react"
 export default function ProductDetails({ data }) {
   const name = data.product.name
@@ -20,26 +16,6 @@ export default function ProductDetails({ data }) {
   return (
     <div>
       <h1>{name}</h1>
-
-      <Swiper
-        spaceBetween={0}
-        slidesPerView={1}
-        style={{ width: "30rem" }}
-        onSlideChange={() => console.log("slide change")}
-        onSwiper={swiper => console.log(swiper)}
-      >
-        {images.map(image => {
-          const img = getImage(image.childImageSharp.gatsbyImageData)
-
-          return (
-            <SwiperSlide>
-              <GatsbyImage image={img} />
-            </SwiperSlide>
-          )
-
-          /*  return <img src={image.publicURL} alt="" /> */
-        })}
-      </Swiper>
     </div>
   )
 }

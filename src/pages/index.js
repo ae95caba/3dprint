@@ -39,16 +39,6 @@ export const query = graphql`
         id
         name
         createdTime
-        preview {
-          thumbnails {
-            large {
-              url
-            }
-          }
-        }
-        images {
-          url
-        }
       }
     }
   }
@@ -58,7 +48,6 @@ function Card({ product }) {
   return (
     <Link to={nameToPath(product.name)}>
       <div className="card">
-        <img src={product.preview[0].thumbnails.large.url} />
         <div className="title-container">
           <h2>{product.name}</h2>
         </div>
