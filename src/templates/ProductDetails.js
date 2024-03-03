@@ -21,16 +21,10 @@ export default function ProductDetails({ data }) {
     <div>
       <h1>{name}</h1>
 
-      {images.map(image => {
-        const img = getImage(image.childImageSharp.gatsbyImageData)
-
-        return <GatsbyImage image={img} />
-
-        /*  return <img src={image.publicURL} alt="" /> */
-      })}
       <Swiper
-        spaceBetween={50}
+        spaceBetween={0}
         slidesPerView={1}
+        style={{ width: "30rem" }}
         onSlideChange={() => console.log("slide change")}
         onSwiper={swiper => console.log(swiper)}
       >
