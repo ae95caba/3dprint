@@ -1,7 +1,9 @@
 const crypto = require("crypto")
 const path = require(`path`)
 const { nameToPath } = require(`./src/functions/nameToPath.js`)
-exports.sourceNodes = async ({ actions }) => {
+const { createRemoteFileNode } = require("gatsby-source-filesystem")
+
+exports.sourceNodes = async ({ actions, createNodeId }) => {
   const { createNode } = actions
 
   const fetchProducts = async () => {
@@ -70,19 +72,48 @@ exports.sourceNodes = async ({ actions }) => {
 exports.createPages = async ({ graphql, actions }) => {
   const { data } = await graphql(`
     query {
-      names: allProduct {
+      pageData: allProduct {
         nodes {
           name
+          id
         }
       }
     }
   `)
 
-  data.names.nodes.forEach(node =>
+  data.pageData.nodes.forEach(node =>
     actions.createPage({
       path: `/${nameToPath(node.name)}`,
       component: path.resolve(`./src/templates/ProductDetails.js`),
-      context: { name: node.name },
+      context: { id: node.id },
     })
   )
+}
+
+exports.onCreateNode = async ({
+  node,
+  actions,
+  store,
+  getCache,
+  createNodeId,
+}) => {
+  if (node.internal.type === "Product") {
+    const { createNode } = actions
+
+    /* Download the image and create the File node. Using gatsby-plugin-sharp and gatsby-transformer-sharp the node will become an ImageSharp. */
+
+    for (const image of node.images) {
+      await createRemoteFileNode({
+        url: image.url,
+        parentNodeId: node.id, // id of the parent node of the fileNode you are going to create
+        /*    store, // Gatsby's redux store */
+        getCache, // get Gatsby's cache
+        createNode, // helper function in gatsby-node to generate the node
+        createNodeId, // helper function in gatsby-node to generate the node id
+
+        store,
+      })
+      console.log(`image created !`)
+    }
+  }
 }
