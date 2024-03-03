@@ -8,18 +8,28 @@ import { useRef } from "react"
 export default function ProductDetails({ data }) {
   const name = data.product.name
   const images = data.images.nodes
+  const thumbs = data.thumbs.nodes
   console.log(images)
 
   return (
     <div>
       <h1>{name}</h1>
-      {images.map(image => {
-        const img = getImage(image?.childImageSharp?.GatsbyImage)
-        return <GatsbyImage image={img} />
-      })}
-      <Carousel>
+
+      <Carousel
+        renderThumbs={() =>
+          thumbs.map(thumb => {
+            if (thumb.childImageSharp) {
+              const img = getImage(thumb.childImageSharp.gatsbyImageData)
+              return <GatsbyImage image={img} />
+            } else return <img src={thumb.publicURL} />
+          })
+        }
+      >
         {images.map(image => {
-          return <img src={image.publicURL} />
+          if (image.childImageSharp) {
+            const img = getImage(image.childImageSharp.gatsbyImageData)
+            return <GatsbyImage image={img} />
+          } else return <img src={image.publicURL} />
         })}
       </Carousel>
     </div>
@@ -41,7 +51,7 @@ export const query = graphql`
       }
     }
 
-    thumbnails: allFile(filter: { parent: { id: { eq: $id } } }) {
+    thumbs: allFile(filter: { parent: { id: { eq: $id } } }) {
       nodes {
         publicURL
         childImageSharp {
