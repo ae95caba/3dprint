@@ -129,39 +129,6 @@ exports.onCreateNode = async ({
     const { createNode } = actions
 
     for (const image of node.images) {
-      // Create your node object ////////////////////////////////////////////////
-      /*   const productImageNode = {
-        // Required fields
-        id: `${image.id}`,
-        parent: node.id,
-        internal: {
-          type: `ProductImage`, // name of the graphQL query
-          // contentDigest will be added just after
-          // but it is required
-        },
-        children: [],
-
-        // Other fields that you want to query with GraphQL
-        url: image.url,
-
-        // etc...
-      }
-
-      // Get content digest of node. (Required field)
-      const contentDigest = crypto
-        .createHash(`md5`)
-        .update(JSON.stringify(image))
-        .digest(`hex`)
-      // Add it to userNode
-      productImageNode.internal.contentDigest = contentDigest
-
-      // Create node with the Gatsby createNode() API
-      createNode(productImageNode)
-
-      console.log(`productImageNode for ${node.name} created !`) */
-
-      ////////////////////////////////////////////////////////////////////////
-
       const { createNodeField, createNode } = actions
 
       /* Download the image and create the File node. Using gatsby-plugin-sharp and gatsby-transformer-sharp the node will become an ImageSharp. */
@@ -175,7 +142,7 @@ exports.onCreateNode = async ({
 
         store,
       })
-      console.log(`gastby image data for ${node.url} created !`)
+      console.log(`gastby image data for ${node.name} created !`)
       ////////////////////////////////////////////////////////////////////////
     }
   }

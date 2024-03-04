@@ -1,6 +1,7 @@
 import * as React from "react"
+import { useEffect, useState } from "react"
 import { Link } from "gatsby"
-import { StaticImage } from "gatsby-plugin-image"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import { graphql } from "gatsby"
 import { nameToPath } from "../functions/nameToPath"
 import Seo from "../components/seo"
@@ -39,15 +40,38 @@ export const query = graphql`
         id
         name
         createdTime
+        images {
+          data {
+            publicURL
+            childImageSharp500: childImageSharp {
+              gatsbyImageData(width: 500)
+            }
+          }
+        }
       }
     }
   }
 `
 
 function Card({ product }) {
+  const [image, setImage] = useState()
+
+  useEffect(() => {
+    if (product.images[0].data.childImageSharp500) {
+      setImage(
+        <GatsbyImage
+          image={getImage(product.images[0].data.childImageSharp500)}
+        />
+      )
+    } else {
+      setImage(<img src={product.images[0].data.publicURL} alt="" />)
+    }
+  }, [product])
+
   return (
     <Link to={nameToPath(product.name)}>
       <div className="card">
+        {image}
         <div className="title-container">
           <h2>{product.name}</h2>
         </div>
