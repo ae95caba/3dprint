@@ -7,8 +7,8 @@ import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import { useRef } from "react"
 export default function ProductDetails({ data }) {
   const name = data.product.name
-  const images = data.images.nodes
-  const thumbs = data.thumbs.nodes
+  const images = data.product.images
+
   console.log(images)
 
   return (
@@ -17,19 +17,21 @@ export default function ProductDetails({ data }) {
 
       <Carousel
         renderThumbs={() =>
-          thumbs.map(thumb => {
-            if (thumb.childImageSharp) {
-              const img = getImage(thumb.childImageSharp.gatsbyImageData)
+          images.map(image => {
+            if (image.data.childImageSharp250) {
+              const img = getImage(
+                image.data.childImageSharp250.gatsbyImageData
+              )
               return <GatsbyImage image={img} />
-            } else return <img src={thumb.publicURL} />
+            } else return <img src={image.data.publicURL} />
           })
         }
       >
         {images.map(image => {
-          if (image.childImageSharp) {
-            const img = getImage(image.childImageSharp.gatsbyImageData)
+          if (image.data.childImageSharp) {
+            const img = getImage(image.data.childImageSharp.gatsbyImageData)
             return <GatsbyImage image={img} />
-          } else return <img src={image.publicURL} />
+          } else return <img src={image.data.publicURL} />
         })}
       </Carousel>
     </div>
@@ -40,26 +42,15 @@ export const query = graphql`
   query ($id: String) {
     product(id: { eq: $id }) {
       name
-    }
-
-    images: allFile(filter: { parent: { id: { eq: $id } } }) {
-      nodes {
-        publicURL
-        childImageSharp {
-          gatsbyImageData
-        }
-      }
-    }
-
-    thumbs: allFile(filter: { parent: { id: { eq: $id } } }) {
-      nodes {
-        publicURL
-        childImageSharp {
-          gatsbyImageData(
-            width: 250
-            placeholder: BLURRED
-            formats: [AUTO, WEBP]
-          )
+      images {
+        data {
+          childImageSharp {
+            gatsbyImageData
+          }
+          childImageSharp250: childImageSharp {
+            gatsbyImageData(width: 250)
+          }
+          publicURL
         }
       }
     }
