@@ -5,10 +5,14 @@ const { createRemoteFileNode } = require("gatsby-source-filesystem")
 
 exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
   createTypes(`
-    type ProductImage implements Node {
-      url: File @link(from: "fields.gatsbyImageData")
-      
+    type Product implements Node {
+      images: [Images]
     }
+    type Images {
+     data: File @link(by:"url", from: "url")
+    }
+ 
+  
   `)
 }
 
@@ -40,9 +44,21 @@ exports.sourceNodes = async ({ actions, createNodeId }) => {
     // Await for results
     const products = await fetchProducts()
 
+    function transformImages(images) {
+      // Use map to create a new array with transformed objects
+      return images.map(image => {
+        // Extract id and url properties from each image object
+        const { id, url } = image
+
+        // Return a new object with id and url properties
+        return { id, url }
+      })
+    }
+
     // Map into these results and create nodes
     products.records.forEach(product => {
       // Create your node object
+
       const productNode = {
         // Required fields
         id: `${product.id}`,
@@ -56,7 +72,9 @@ exports.sourceNodes = async ({ actions, createNodeId }) => {
 
         // Other fields that you want to query with GraphQL
         createdTime: product.createdTime,
-        ...product.fields,
+        name: product.fields.name,
+        tags: product.fields.tags,
+        images: transformImages(product.fields.images),
         // etc...
       }
 
@@ -112,7 +130,7 @@ exports.onCreateNode = async ({
 
     for (const image of node.images) {
       // Create your node object ////////////////////////////////////////////////
-      const productImageNode = {
+      /*   const productImageNode = {
         // Required fields
         id: `${image.id}`,
         parent: node.id,
@@ -140,33 +158,25 @@ exports.onCreateNode = async ({
       // Create node with the Gatsby createNode() API
       createNode(productImageNode)
 
-      console.log(`productImageNode for ${node.name} created !`)
+      console.log(`productImageNode for ${node.name} created !`) */
 
       ////////////////////////////////////////////////////////////////////////
-    }
-  }
-  if (node.internal.type === "ProductImage") {
-    const { createNodeField, createNode } = actions
 
-    /* Download the image and create the File node. Using gatsby-plugin-sharp and gatsby-transformer-sharp the node will become an ImageSharp. */
-    gatsbyImageDataNode = await createRemoteFileNode({
-      url: node.url,
-      parentNodeId: node.id, // id of the parent node of the fileNode you are going to create
-      /*    store, // Gatsby's redux store */
-      getCache, // get Gatsby's cache
-      createNode, // helper function in gatsby-node to generate the node
-      createNodeId, // helper function in gatsby-node to generate the node id
+      const { createNodeField, createNode } = actions
 
-      store,
-    })
-    console.log(`gastby image data for ${node.url} created !`)
-    ////////////////////////////////////////////////////////////////////////
-    if (gatsbyImageDataNode) {
-      createNodeField({
-        node,
-        name: "gatsbyImageData",
-        value: gatsbyImageDataNode.id,
+      /* Download the image and create the File node. Using gatsby-plugin-sharp and gatsby-transformer-sharp the node will become an ImageSharp. */
+      gatsbyImageDataNode = await createRemoteFileNode({
+        url: image.url,
+        parentNodeId: node.id, // id of the parent node of the fileNode you are going to create
+        /*    store, // Gatsby's redux store */
+        getCache, // get Gatsby's cache
+        createNode, // helper function in gatsby-node to generate the node
+        createNodeId, // helper function in gatsby-node to generate the node id
+
+        store,
       })
+      console.log(`gastby image data for ${node.url} created !`)
+      ////////////////////////////////////////////////////////////////////////
     }
   }
 }
