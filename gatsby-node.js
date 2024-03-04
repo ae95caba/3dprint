@@ -3,6 +3,15 @@ const path = require(`path`)
 const { nameToPath } = require(`./src/functions/nameToPath.js`)
 const { createRemoteFileNode } = require("gatsby-source-filesystem")
 
+exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
+  createTypes(`
+    type ProductImage implements Node {
+      url: File @link(from: "fields.gatsbyImageData")
+      
+    }
+  `)
+}
+
 exports.sourceNodes = async ({ actions, createNodeId }) => {
   const { createNode } = actions
 
@@ -150,7 +159,7 @@ exports.onCreateNode = async ({
 
       store,
     })
-    console.log(`gastby image data for ${node.name} created !`)
+    console.log(`gastby image data for ${node.url} created !`)
     ////////////////////////////////////////////////////////////////////////
     if (gatsbyImageDataNode) {
       createNodeField({
