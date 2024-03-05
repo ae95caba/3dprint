@@ -48,10 +48,10 @@ export const query = graphql`
       images {
         data {
           childImageSharp {
-            gatsbyImageData
+            gatsbyImageData(width: 480)
           }
           childImageSharp90: childImageSharp {
-            gatsbyImageData(width: 90)
+            gatsbyImageData(width: 100)
           }
           publicURL
         }
