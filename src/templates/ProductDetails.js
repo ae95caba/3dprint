@@ -12,29 +12,32 @@ export default function ProductDetails({ data }) {
   console.log(images)
 
   return (
-    <div>
-      <h1>{name}</h1>
-
-      <Carousel
-        renderThumbs={() =>
-          images.map(image => {
-            if (image.data.childImageSharp250) {
-              const img = getImage(
-                image.data.childImageSharp250.gatsbyImageData
-              )
-              return <GatsbyImage image={img} />
-            } else return <img src={image.data.publicURL} />
-          })
-        }
-      >
-        {images.map(image => {
-          if (image.data.childImageSharp) {
-            const img = getImage(image.data.childImageSharp.gatsbyImageData)
-            return <GatsbyImage image={img} />
-          } else return <img src={image.data.publicURL} />
-        })}
-      </Carousel>
-    </div>
+    <main>
+      <section className="catalog">
+        <div className="content">
+          <h1>{name}</h1>
+          <Carousel
+            renderThumbs={() =>
+              images.map(image => {
+                if (image.data.childImageSharp250) {
+                  const img = getImage(
+                    image.data.childImageSharp250.gatsbyImageData
+                  )
+                  return <GatsbyImage image={img} />
+                } else return <img src={image.data.publicURL} />
+              })
+            }
+          >
+            {images.map(image => {
+              if (image.data.childImageSharp) {
+                const img = getImage(image.data.childImageSharp.gatsbyImageData)
+                return <GatsbyImage image={img} />
+              } else return <img src={image.data.publicURL} />
+            })}
+          </Carousel>
+        </div>
+      </section>
+    </main>
   )
 }
 
