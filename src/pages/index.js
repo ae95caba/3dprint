@@ -15,14 +15,18 @@ const IndexPage = ({ data }) => {
   console.log(products)
 
   return (
-    <div>
-      <h1>hello world</h1>
-      <div className="cards-container">
-        {products.map(product => (
-          <Card product={product} />
-        ))}
-      </div>
-    </div>
+    <main>
+      <section className="home">
+        <div className="content">
+          <h1>Catalogo</h1>
+          <div className="cards-container">
+            {products.map(product => (
+              <Card product={product} />
+            ))}
+          </div>
+        </div>
+      </section>
+    </main>
   )
 }
 /**
