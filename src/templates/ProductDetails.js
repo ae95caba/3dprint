@@ -19,9 +19,9 @@ export default function ProductDetails({ data }) {
           <Carousel
             renderThumbs={() =>
               images.map(image => {
-                if (image.data.childImageSharp250) {
+                if (image.data.childImageSharp90) {
                   const img = getImage(
-                    image.data.childImageSharp250.gatsbyImageData
+                    image.data.childImageSharp90.gatsbyImageData
                   )
                   return <GatsbyImage image={img} />
                 } else return <img src={image.data.publicURL} />
@@ -50,8 +50,8 @@ export const query = graphql`
           childImageSharp {
             gatsbyImageData
           }
-          childImageSharp250: childImageSharp {
-            gatsbyImageData(width: 250)
+          childImageSharp90: childImageSharp {
+            gatsbyImageData(width: 90)
           }
           publicURL
         }

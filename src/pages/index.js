@@ -47,8 +47,8 @@ export const query = graphql`
         images {
           data {
             publicURL
-            childImageSharp500: childImageSharp {
-              gatsbyImageData(width: 500)
+            childImageSharp240: childImageSharp {
+              gatsbyImageData(width: 240)
             }
           }
         }
@@ -61,10 +61,10 @@ function Card({ product }) {
   const [image, setImage] = useState()
 
   useEffect(() => {
-    if (product.images[0].data.childImageSharp500) {
+    if (product.images[0].data.childImageSharp240) {
       setImage(
         <GatsbyImage
-          image={getImage(product.images[0].data.childImageSharp500)}
+          image={getImage(product.images[0].data.childImageSharp240)}
         />
       )
     } else {
