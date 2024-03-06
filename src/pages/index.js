@@ -66,7 +66,16 @@ function Card({ product }) {
         />
       )
     } else {
-      setImage(<img src={product.images[0].data.publicURL} alt="" />)
+      setImage(
+        <img
+          loading="lazy"
+          src={product.images[0].data.publicURL}
+          alt=""
+          role="presentation"
+          fetchPriority="low"
+          decoding="async"
+        />
+      )
     }
   }, [product])
 

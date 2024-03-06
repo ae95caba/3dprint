@@ -6,6 +6,7 @@ import { Carousel } from "react-responsive-carousel"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import OutsideClickHandler from "react-outside-click-handler"
 import { isMobile } from "react-device-detect"
+
 export default function ProductDetails({ data }) {
   const name = data.product.name
   const images = data.product.images
@@ -32,7 +33,16 @@ export default function ProductDetails({ data }) {
                     image.data.childImageSharp90.gatsbyImageData
                   )
                   return <GatsbyImage image={img} />
-                } else return <img src={image.data.publicURL} />
+                } else
+                  return (
+                    <img
+                      src={image.data.publicURL}
+                      loading="lazy"
+                      role="presentation"
+                      fetchPriority="low"
+                      decoding="async"
+                    />
+                  )
               })
             }
           >
@@ -40,7 +50,16 @@ export default function ProductDetails({ data }) {
               if (image.data.childImageSharp) {
                 const img = getImage(image.data.childImageSharp.gatsbyImageData)
                 return <GatsbyImage image={img} />
-              } else return <img src={image.data.publicURL} />
+              } else
+                return (
+                  <img
+                    src={image.data.publicURL}
+                    loading="lazy"
+                    role="presentation"
+                    fetchPriority="low"
+                    decoding="async"
+                  />
+                )
             })}
           </Carousel>
         </div>
