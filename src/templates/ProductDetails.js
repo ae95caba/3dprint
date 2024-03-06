@@ -35,13 +35,16 @@ export default function ProductDetails({ data }) {
                   return <GatsbyImage image={img} />
                 } else
                   return (
-                    <img
-                      src={image.data.publicURL}
-                      loading="lazy"
-                      role="presentation"
+                    <video
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
                       fetchPriority="low"
                       decoding="async"
-                    />
+                    >
+                      <source src={image.data.publicURL} type="video/webm" />
+                    </video>
                   )
               })
             }
@@ -52,13 +55,16 @@ export default function ProductDetails({ data }) {
                 return <GatsbyImage image={img} />
               } else
                 return (
-                  <img
-                    src={image.data.publicURL}
-                    loading="lazy"
-                    role="presentation"
+                  <video
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
                     fetchPriority="low"
                     decoding="async"
-                  />
+                  >
+                    <source src={image.data.publicURL} type="video/webm" />
+                  </video>
                 )
             })}
           </Carousel>

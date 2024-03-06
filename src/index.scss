@@ -59,7 +59,7 @@ section.home {
       box-shadow: $cool-shadow;
       border-radius: 0.5rem;
       overflow: clip;
-      img,
+      video,
       .gatsby-image-wrapper {
         @include smallToMediumImages();
       }
@@ -95,7 +95,7 @@ section.details {
     .carousel-slider {
       background-color: black;
     }
-    img,
+    video,
     .gatsby-image-wrapper {
       @include smallToMediumImages();
     }
@@ -110,7 +110,7 @@ section.details {
     display: flex;
     align-items: center;
     justify-content: center;
-    img,
+    video,
     .gatsby-image-wrapper {
       max-height: 90vh;
     }

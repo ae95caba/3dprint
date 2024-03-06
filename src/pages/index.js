@@ -6,7 +6,7 @@ import { graphql } from "gatsby"
 import { nameToPath } from "../functions/nameToPath"
 import Seo from "../components/seo"
 import "../index.scss"
-
+import milim from "../milim.webm"
 const utmParameters = `?utm_source=starter&utm_medium=start-page&utm_campaign=default-starter`
 
 const IndexPage = ({ data }) => {
@@ -67,14 +67,16 @@ function Card({ product }) {
       )
     } else {
       setImage(
-        <img
-          loading="lazy"
-          src={product.images[0].data.publicURL}
-          alt=""
-          role="presentation"
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
           fetchPriority="low"
           decoding="async"
-        />
+        >
+          <source src={product.images[0].data.publicURL} type="video/webm" />
+        </video>
       )
     }
   }, [product])
