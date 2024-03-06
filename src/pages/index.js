@@ -10,9 +10,7 @@ import "../index.scss"
 const utmParameters = `?utm_source=starter&utm_medium=start-page&utm_campaign=default-starter`
 
 const IndexPage = ({ data }) => {
-  console.log(JSON.stringify(data))
   const products = data.products.nodes
-  console.log(products)
 
   return (
     <main>

@@ -1,5 +1,10 @@
 $universal-width: 800px;
 $cool-shadow: 0 0 5px rgba(0, 0, 0, 0.502);
+@mixin smallToMediumImages {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: contain;
+}
 * {
   margin: 0px;
   padding: 0px;
@@ -7,26 +12,21 @@ $cool-shadow: 0 0 5px rgba(0, 0, 0, 0.502);
   box-sizing: border-box;
 }
 
-body {
-  background-color: #822ef5;
-}
-
 a {
   color: inherit;
+}
+
+body {
+  background-color: red;
 }
 
 .carousel-root {
   max-width: 30rem;
 }
 
-img,
-.gatsby-image-wrapper {
-  width: 100%;
-  aspect-ratio: 1/1;
-  object-fit: contain;
+main {
 }
-
-section.catalog,
+section.details,
 section.home {
   .content {
     max-width: $universal-width;
@@ -59,12 +59,16 @@ section.home {
       box-shadow: $cool-shadow;
       border-radius: 0.5rem;
       overflow: clip;
+      img,
+      .gatsby-image-wrapper {
+        @include smallToMediumImages();
+      }
 
       .title-container {
         position: absolute;
         width: 100%;
         bottom: 0;
-        background-color: rgba(255, 255, 255, 0.6);
+        background-color: rgba(255, 255, 255, 0.409);
         padding: 0rem 0.5rem;
         h2 {
           white-space: nowrap;
@@ -78,9 +82,37 @@ section.home {
   }
 }
 
-section.catalog {
+section.details {
+  min-height: 100svh;
+  min-height: 100vh;
   position: relative;
   .thumb {
     width: 100px !important;
+  }
+  .carousel-root {
+    max-width: 100%;
+    width: 30rem;
+    .carousel-slider {
+      background-color: black;
+    }
+    img,
+    .gatsby-image-wrapper {
+      @include smallToMediumImages();
+    }
+  }
+  .modal {
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.327);
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img,
+    .gatsby-image-wrapper {
+      max-height: 90vh;
+    }
   }
 }
