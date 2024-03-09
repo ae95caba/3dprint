@@ -46,7 +46,7 @@ export const query = graphql`
           data {
             publicURL
             childImageSharp240: childImageSharp {
-              gatsbyImageData(width: 240)
+              gatsbyImageData(width: 400)
             }
           }
         }
