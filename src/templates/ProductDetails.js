@@ -25,6 +25,7 @@ export default function ProductDetails({ data }) {
                 setModalImage(item)
               }
             }}
+            thumbWidth={100}
             swipeable={false}
             renderThumbs={() =>
               images.map(image => {
