@@ -101,18 +101,27 @@ section.details {
     }
   }
   .modal {
-    z-index: 2;
-    background-color: rgba(0, 0, 0, 0.327);
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
+    container-name: modal;
+    container-type: size;
     display: flex;
     align-items: center;
     justify-content: center;
-    video,
-    .gatsby-image-wrapper {
-      max-height: 90vh;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.327);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    padding: 4rem;
+  }
+}
+
+@container modal (min-width: 0px) {
+  video,
+  .gatsby-image-wrapper {
+    * {
+      max-width: 100cqw;
+      max-height: 100cqh;
     }
   }
 }

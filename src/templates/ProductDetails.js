@@ -73,6 +73,7 @@ export default function ProductDetails({ data }) {
         {!isMobile && showModal && (
           <div className="modal">
             <OutsideClickHandler
+              display="contents"
               onOutsideClick={() => {
                 setShowModal(false)
               }}
