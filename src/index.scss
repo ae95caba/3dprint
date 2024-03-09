@@ -5,7 +5,9 @@ $cool-shadow: 0 0 5px rgba(0, 0, 0, 0.502);
   aspect-ratio: 1/1;
   object-fit: contain;
 }
-* {
+*,
+::after,
+::before {
   margin: 0px;
   padding: 0px;
   border: 0px;
@@ -69,12 +71,13 @@ section.home {
         width: 100%;
         bottom: 0;
         background-color: rgba(255, 255, 255, 0.409);
-        padding: 0rem 0.5rem;
+        padding: 0.5rem 0.5rem;
         h2 {
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
-          font-size: 1.2rem;
+          font-size: 1rem;
+          text-transform: uppercase;
           text-align: center;
         }
       }
@@ -90,8 +93,11 @@ section.details {
   .carousel-root {
     max-width: 100%;
     width: 30rem;
+
     .carousel-slider {
       background-color: black;
+      height: 30rem;
+      max-height: 100%;
     }
     video,
     .gatsby-image-wrapper {
