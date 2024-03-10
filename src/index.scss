@@ -1,8 +1,5 @@
 $universal-width: 800px;
 
-$universal-x-padding: 2rem;
-$universal-y-padding: 8rem;
-
 $cool-shadow: 0 0 5px rgba(0, 0, 0, 0.502);
 @mixin smallToMediumImages {
   width: 100%;
@@ -10,18 +7,24 @@ $cool-shadow: 0 0 5px rgba(0, 0, 0, 0.502);
   object-fit: contain;
 }
 
+:root {
+  --main-bg-color: red;
+  --universal-y-padding: 8rem;
+  --universal-x-padding: 2rem;
+}
+
 body {
-  background-color: red;
+  background-color: var(--main-bg-color);
 }
 
 .carousel-root {
   max-width: 30rem;
 }
 main > section {
-  padding-bottom: $universal-y-padding;
-  padding-top: $universal-y-padding;
-  padding-left: 2rem;
-  padding-right: 2rem;
+  padding-bottom: var(--universal-y-padding);
+  padding-top: var(--universal-y-padding);
+  padding-left: var(--universal-x-padding);
+  padding-right: var(--universal-x-padding);
   & > .content {
     margin: auto;
     max-width: 1200px;
@@ -119,5 +122,12 @@ section.details {
       max-width: 100cqw;
       max-height: 100cqh;
     }
+  }
+}
+
+@media (max-width: 500px) {
+  :root {
+    --universal-y-padding: 2rem;
+    --main-bg-color: blue;
   }
 }
