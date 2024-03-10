@@ -6,25 +6,27 @@ import { graphql } from "gatsby"
 import { nameToPath } from "../functions/nameToPath"
 import Seo from "../components/seo"
 import "../index.scss"
-import milim from "../milim.webm"
+import Layout from "../components/Layout/layout"
 const utmParameters = `?utm_source=starter&utm_medium=start-page&utm_campaign=default-starter`
 
 const IndexPage = ({ data }) => {
   const products = data.products.nodes
 
   return (
-    <main>
-      <section className="home">
-        <div className="content">
-          <h1>Catalogo</h1>
-          <div className="cards-container">
-            {products.map(product => (
-              <Card product={product} />
-            ))}
+    <Layout>
+      <main>
+        <section className="home">
+          <div className="content">
+            <h1>Catalogo</h1>
+            <div className="cards-container">
+              {products.map(product => (
+                <Card product={product} />
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
-    </main>
+        </section>
+      </main>
+    </Layout>
   )
 }
 /**
