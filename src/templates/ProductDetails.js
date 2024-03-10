@@ -6,6 +6,7 @@ import { Carousel } from "react-responsive-carousel"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import OutsideClickHandler from "react-outside-click-handler"
 import { isMobile } from "react-device-detect"
+import Layout from "../components/Layout/layout"
 
 export default function ProductDetails({ data }) {
   const name = data.product.name
@@ -14,24 +15,47 @@ export default function ProductDetails({ data }) {
   const [modalImage, setModalImage] = useState()
 
   return (
-    <main>
-      <section className="details">
-        <div className="content">
-          <h1>{name}</h1>
-          <Carousel
-            onClickItem={(index, item) => {
-              if (!isMobile) {
-                setShowModal(true)
-                setModalImage(item)
+    <Layout>
+      <main>
+        <section className="details">
+          <div className="content">
+            <h1>{name}</h1>
+            <Carousel
+              onClickItem={(index, item) => {
+                if (!isMobile) {
+                  setShowModal(true)
+                  setModalImage(item)
+                }
+              }}
+              thumbWidth={100}
+              swipeable={false}
+              renderThumbs={() =>
+                images.map(image => {
+                  if (image.data.childImageSharp90) {
+                    const img = getImage(
+                      image.data.childImageSharp90.gatsbyImageData
+                    )
+                    return <GatsbyImage image={img} />
+                  } else
+                    return (
+                      <video
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        fetchPriority="low"
+                        decoding="async"
+                      >
+                        <source src={image.data.publicURL} type="video/webm" />
+                      </video>
+                    )
+                })
               }
-            }}
-            thumbWidth={100}
-            swipeable={false}
-            renderThumbs={() =>
-              images.map(image => {
-                if (image.data.childImageSharp90) {
+            >
+              {images.map(image => {
+                if (image.data.childImageSharp) {
                   const img = getImage(
-                    image.data.childImageSharp90.gatsbyImageData
+                    image.data.childImageSharp.gatsbyImageData
                   )
                   return <GatsbyImage image={img} />
                 } else
@@ -47,44 +71,24 @@ export default function ProductDetails({ data }) {
                       <source src={image.data.publicURL} type="video/webm" />
                     </video>
                   )
-              })
-            }
-          >
-            {images.map(image => {
-              if (image.data.childImageSharp) {
-                const img = getImage(image.data.childImageSharp.gatsbyImageData)
-                return <GatsbyImage image={img} />
-              } else
-                return (
-                  <video
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    fetchPriority="low"
-                    decoding="async"
-                  >
-                    <source src={image.data.publicURL} type="video/webm" />
-                  </video>
-                )
-            })}
-          </Carousel>
-        </div>
-
-        {!isMobile && showModal && (
-          <div className="modal">
-            <OutsideClickHandler
-              display="contents"
-              onOutsideClick={() => {
-                setShowModal(false)
-              }}
-            >
-              {modalImage}
-            </OutsideClickHandler>
+              })}
+            </Carousel>
           </div>
-        )}
-      </section>
-    </main>
+          {!isMobile && showModal && (
+            <div className="modal">
+              <OutsideClickHandler
+                display="contents"
+                onOutsideClick={() => {
+                  setShowModal(false)
+                }}
+              >
+                {modalImage}
+              </OutsideClickHandler>
+            </div>
+          )}
+        </section>
+      </main>
+    </Layout>
   )
 }
 

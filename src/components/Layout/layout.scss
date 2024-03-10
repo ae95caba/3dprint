@@ -3,7 +3,7 @@ $light-background: #f5f5f5;
 $dark-background: #454a53;
 $accent-color: #d6b56e;
 $cool-shadow: 0 0 5px rgba(0, 0, 0, 0.5019607843);
-$universal-width: 1200px;
+$universal-width: 800px;
 $universal-x-padding: 2rem;
 $universal-y-padding: 8rem;
 
@@ -140,18 +140,6 @@ header {
   height: fit-content;
   grid-template-columns: 100%;
   grid-template-rows: min-content min-content 1fr;
-}
-
-main > section {
-  padding-bottom: $universal-y-padding;
-  padding-top: $universal-y-padding;
-  padding-left: 2rem;
-  padding-right: 2rem;
-  & > .content {
-    margin: auto;
-    max-width: 1200px;
-    /*  overflow-x: clip; */
-  }
 }
 
 footer {
