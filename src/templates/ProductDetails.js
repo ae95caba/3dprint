@@ -6,7 +6,7 @@ import { Carousel } from "react-responsive-carousel"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import OutsideClickHandler from "react-outside-click-handler"
 import { isMobile } from "react-device-detect"
-import Layout from "../components/Layout/layout"
+import Layout from "../components/Layout/Layout"
 
 export default function ProductDetails({ data }) {
   const name = data.product.name

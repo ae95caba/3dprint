@@ -6,7 +6,7 @@ import { graphql } from "gatsby"
 import { nameToPath } from "../functions/nameToPath"
 import Seo from "../components/seo"
 import "../index.scss"
-import Layout from "../components/Layout/layout"
+import Layout from "../components/Layout/Layout"
 const utmParameters = `?utm_source=starter&utm_medium=start-page&utm_campaign=default-starter`
 
 const IndexPage = ({ data }) => {
