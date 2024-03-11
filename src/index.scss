@@ -1,12 +1,16 @@
 $universal-width: 800px;
 
 $cool-shadow: 0 0 5px rgba(0, 0, 0, 0.502);
-@mixin smallToMediumImages {
+@mixin squareMedia {
   width: 100%;
   aspect-ratio: 1/1;
   object-fit: contain;
 }
 
+@mixin takeAllViewPortBelowHeader {
+  min-height: calc(100svh - var(--header-height));
+  min-height: calc(100vh - var(--header-height));
+}
 :root {
   --main-bg-color: red;
   --universal-y-padding: 4rem;
@@ -43,6 +47,7 @@ main > section {
 }
 
 section.home {
+  @include takeAllViewPortBelowHeader();
   .cards-container {
     display: flex;
     flex-wrap: wrap;
@@ -58,7 +63,7 @@ section.home {
       overflow: clip;
       video,
       .gatsby-image-wrapper {
-        @include smallToMediumImages();
+        @include squareMedia();
       }
 
       .title-container {
@@ -83,8 +88,7 @@ section.home {
 section.details {
   display: flex;
   align-items: center;
-  min-height: calc(100svh - var(--header-height));
-  min-height: calc(100vh - var(--header-height));
+  @include takeAllViewPortBelowHeader();
   transform: translateZ(
     0
   ); // required to make the modal fixed relative to this element and not the viewport
@@ -98,7 +102,7 @@ section.details {
     }
     video,
     .gatsby-image-wrapper {
-      @include smallToMediumImages();
+      @include squareMedia();
     }
   }
   .modal {
