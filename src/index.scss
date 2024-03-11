@@ -11,6 +11,7 @@ $cool-shadow: 0 0 5px rgba(0, 0, 0, 0.502);
   --main-bg-color: red;
   --universal-y-padding: 8rem;
   --universal-x-padding: 2rem;
+  --header-height: 0px;
 }
 
 body {
@@ -81,9 +82,11 @@ section.home {
 }
 
 section.details {
-  min-height: 100svh;
-  min-height: 100vh;
-
+  padding: 0;
+  display: flex;
+  align-items: center;
+  min-height: calc(100svh - var(--header-height));
+  min-height: calc(100vh - var(--header-height));
   transform: translateZ(
     0
   ); // required to make the modal fixed relative to this element and not the viewport
@@ -107,12 +110,12 @@ section.details {
     align-items: center;
     justify-content: center;
     z-index: 2;
-    background-color: rgba(0, 0, 0, 0.327);
+    background-color: rgba(0, 0, 0, 0.6);
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     padding: 2rem;
   }
 }
