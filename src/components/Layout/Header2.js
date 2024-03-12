@@ -22,7 +22,7 @@ export default function Navigation() {
     setTimeout(updateHeight, 0)
   }, [])
   return (
-    <nav className="navigation" ref={headerRef}>
+    <header className="navigation" ref={headerRef}>
       <input
         type="checkbox"
         id="more"
@@ -36,69 +36,73 @@ export default function Navigation() {
             Local news
           </a>
         </div>
-        <ul className="navigation__list">
-          <li className="navigation__item">
-            <a href="#" className="navigation__link">
-              News
-            </a>
-          </li>
-          <li className="navigation__item">
-            <a href="#" className="navigation__link">
-              Sport
-            </a>
-          </li>
-          <li className="navigation__item">
-            <a href="#" className="navigation__link">
-              Weather
-            </a>
-          </li>
-          <li className="navigation__item">
-            <a href="#" className="navigation__link">
-              TV
-            </a>
-          </li>
-          <li className="navigation__item">
-            <a href="#" className="navigation__link">
-              Radio
-            </a>
-          </li>
-          <li className="navigation__item">
-            <a href="#" className="navigation__link">
-              Travel
-            </a>
-          </li>
-          <li className="navigation__item">
-            <a href="#" className="navigation__link">
-              Music
-            </a>
-          </li>
-          <li className="navigation__item">
-            <a href="#" className="navigation__link">
-              Food
-            </a>
-          </li>
-          <li className="navigation__item">
-            <a href="#" className="navigation__link">
-              Arts
-            </a>
-          </li>
-          <li className="navigation__item">
-            <a href="#" className="navigation__link">
-              Earth
-            </a>
-          </li>
-          <li className="navigation__item">
-            <a href="#" className="navigation__link">
-              Local
-            </a>
-          </li>
-        </ul>
+
+        <nav>
+          <ul className="navigation__list">
+            <li className="navigation__item">
+              <a href="#" className="navigation__link">
+                News
+              </a>
+            </li>
+            <li className="navigation__item">
+              <a href="#" className="navigation__link">
+                Sport
+              </a>
+            </li>
+            <li className="navigation__item">
+              <a href="#" className="navigation__link">
+                Weather
+              </a>
+            </li>
+            <li className="navigation__item">
+              <a href="#" className="navigation__link">
+                TV
+              </a>
+            </li>
+            <li className="navigation__item">
+              <a href="#" className="navigation__link">
+                Radio
+              </a>
+            </li>
+            <li className="navigation__item">
+              <a href="#" className="navigation__link">
+                Travel
+              </a>
+            </li>
+            <li className="navigation__item">
+              <a href="#" className="navigation__link">
+                Music
+              </a>
+            </li>
+            <li className="navigation__item">
+              <a href="#" className="navigation__link">
+                Food
+              </a>
+            </li>
+            <li className="navigation__item">
+              <a href="#" className="navigation__link">
+                Arts
+              </a>
+            </li>
+            <li className="navigation__item">
+              <a href="#" className="navigation__link">
+                Earth
+              </a>
+            </li>
+            <li className="navigation__item">
+              <a href="#" className="navigation__link">
+                Local
+              </a>
+            </li>
+          </ul>
+        </nav>
+
         <div className="navigation__toggle">
           <label htmlFor="more" aria-hidden="true" className="navigation__link">
             More
           </label>
         </div>
       </div>
-    </nav>
+    </header>
   )
 }
