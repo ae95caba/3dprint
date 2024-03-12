@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import { Link } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import { graphql } from "gatsby"
@@ -7,11 +7,12 @@ import { nameToPath } from "../functions/nameToPath"
 import Seo from "../components/seo"
 import "../index.scss"
 import Layout from "../components/Layout/Layout"
+import { GlobalContext } from "../context/GlobalContext"
 const utmParameters = `?utm_source=starter&utm_medium=start-page&utm_campaign=default-starter`
 
-const IndexPage = ({ data }) => {
-  const products = data.products.nodes
-
+const IndexPage = () => {
+  /*  const products = data.products.nodes */
+  const { displayedProducts } = useContext(GlobalContext)
   return (
     <Layout>
       <main>
@@ -19,7 +20,7 @@ const IndexPage = ({ data }) => {
           <div className="content">
             <h1>Catalogo</h1>
             <div className="cards-container">
-              {products.map(product => (
+              {displayedProducts.map(product => (
                 <Card product={product} />
               ))}
             </div>
@@ -37,25 +38,6 @@ const IndexPage = ({ data }) => {
 export const Head = () => <Seo title="Home" />
 
 export default IndexPage
-export const query = graphql`
-  query {
-    products: allProduct {
-      nodes {
-        id
-        name
-        createdTime
-        images {
-          data {
-            publicURL
-            childImageSharp240: childImageSharp {
-              gatsbyImageData(width: 400)
-            }
-          }
-        }
-      }
-    }
-  }
-`
 
 function Card({ product }) {
   const [image, setImage] = useState()

@@ -1,7 +1,35 @@
 import React from "react"
-import { useRef, useEffect } from "react"
+import { useRef, useEffect, useContext } from "react"
 import "./header2.css"
+import { useStaticQuery, graphql } from "gatsby"
+import { GlobalContext } from "../../context/GlobalContext"
+
 export default function Navigation() {
+  const { setDisplayedProducts, allProducts } = useContext(GlobalContext)
+
+  const data = useStaticQuery(graphql`
+    query MyQuery {
+      categories: allProduct {
+        distinct(field: { category: SELECT })
+      }
+    }
+  `)
+
+  function filteredProducts(products, category) {
+    console.log(products[0])
+    // Use the filter method to create a new array with products of the given category
+    const filteredProducts = products.filter(product => {
+      console.log(product)
+      console.log(category)
+
+      return product.category === category
+    })
+    console.log(filteredProducts)
+    return filteredProducts
+  }
+
+  const categories = data.categories.distinct
+  console.log(categories)
   const headerRef = useRef(null)
   //set --header-height" css variable value
   useEffect(() => {
@@ -39,61 +67,21 @@ export default function Navigation() {
 
         <nav>
           <ul className="navigation__list">
-            <li className="navigation__item">
-              <a href="#" className="navigation__link">
-                News
-              </a>
-            </li>
-            <li className="navigation__item">
-              <a href="#" className="navigation__link">
-                Sport
-              </a>
-            </li>
-            <li className="navigation__item">
-              <a href="#" className="navigation__link">
-                Weather
-              </a>
-            </li>
-            <li className="navigation__item">
-              <a href="#" className="navigation__link">
-                TV
-              </a>
-            </li>
-            <li className="navigation__item">
-              <a href="#" className="navigation__link">
-                Radio
-              </a>
-            </li>
-            <li className="navigation__item">
-              <a href="#" className="navigation__link">
-                Travel
-              </a>
-            </li>
-            <li className="navigation__item">
-              <a href="#" className="navigation__link">
-                Music
-              </a>
-            </li>
-            <li className="navigation__item">
-              <a href="#" className="navigation__link">
-                Food
-              </a>
-            </li>
-            <li className="navigation__item">
-              <a href="#" className="navigation__link">
-                Arts
-              </a>
-            </li>
-            <li className="navigation__item">
-              <a href="#" className="navigation__link">
-                Earth
-              </a>
-            </li>
-            <li className="navigation__item">
-              <a href="#" className="navigation__link">
-                Local
-              </a>
-            </li>
+            {categories.map(category => (
+              <li className="navigation__item">
+                <a
+                  href="#"
+                  onClick={() => {
+                    setDisplayedProducts(
+                      filteredProducts(allProducts, category)
+                    )
+                  }}
+                  className="navigation__link"
+                >
+                  {category}
+                </a>
+              </li>
+            ))}
           </ul>
         </nav>
 
@@ -106,3 +94,8 @@ export default function Navigation() {
     </header>
   )
 }
+/* query MyQuery {
+    allProduct {
+      distinct(field: {category: SELECT})
+    }
+  } */
