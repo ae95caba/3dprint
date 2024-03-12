@@ -6,7 +6,7 @@
  */
 
 import * as React from "react"
-
+import Navigation from "./Header2.js"
 import Header from "./Header.js"
 import "./layout.scss"
 
@@ -15,8 +15,7 @@ import Footer from "./Footer.js"
 const Layout = ({ children }) => {
   return (
     <>
-      <Header />
-
+      <Navigation />
       {children}
       <Footer />
     </>

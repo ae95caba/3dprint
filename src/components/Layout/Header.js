@@ -28,8 +28,7 @@ export default function Header() {
 
     // Schedule the code to run after the layout step
     setTimeout(updateHeight, 0)
-  }, []) // Empty dependency array ensures this effect runs only once on mount
-
+  }, [])
   return (
     <header ref={headerRef}>
       <div className="content">
