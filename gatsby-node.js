@@ -62,6 +62,7 @@ exports.sourceNodes = async ({ actions, createNodeId }) => {
       const productNode = {
         // Required fields
         id: `${product.id}`,
+
         parent: `__SOURCE__`,
         internal: {
           type: `Product`, // name of the graphQL query
@@ -73,6 +74,7 @@ exports.sourceNodes = async ({ actions, createNodeId }) => {
         // Other fields that you want to query with GraphQL
         createdTime: product.createdTime,
         name: product.fields.name,
+        tags: product.fields.tags,
         category: product.fields.category,
         images: transformImages(product.fields.images),
         // etc...
@@ -99,6 +101,9 @@ exports.sourceNodes = async ({ actions, createNodeId }) => {
 exports.createPages = async ({ graphql, actions }) => {
   const { data } = await graphql(`
     query {
+      categories: allProduct {
+        distinct(field: { category: SELECT })
+      }
       pageData: allProduct {
         nodes {
           name
@@ -108,6 +113,16 @@ exports.createPages = async ({ graphql, actions }) => {
     }
   `)
 
+  data.categories.distinct.forEach(node =>
+    actions.createPage({
+      path: `/${nameToPath(node)}`,
+      component: path.resolve(`./src/templates/FilteredCatalog.js`),
+      context: { category: node },
+    })
+  )
+
+  //////////////////////////////////////////
+
   data.pageData.nodes.forEach(node =>
     actions.createPage({
       path: `/${nameToPath(node.name)}`,
@@ -115,6 +130,7 @@ exports.createPages = async ({ graphql, actions }) => {
       context: { id: node.id },
     })
   )
+  ///////////
 }
 
 exports.onCreateNode = async ({

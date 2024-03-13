@@ -1,35 +1,18 @@
 import React from "react"
-import { useRef, useEffect, useContext } from "react"
+import { useRef, useEffect } from "react"
 import "./header2.css"
-import { useStaticQuery, graphql } from "gatsby"
-import { GlobalContext } from "../../context/GlobalContext"
-
+import { useStaticQuery, graphql, Link } from "gatsby"
+import { nameToPath } from "../../functions/nameToPath"
+import logo from "./logo.svg"
 export default function Navigation() {
-  const { setDisplayedProducts, allProducts } = useContext(GlobalContext)
-
   const data = useStaticQuery(graphql`
-    query MyQuery {
+    query {
       categories: allProduct {
         distinct(field: { category: SELECT })
       }
     }
   `)
-
-  function filteredProducts(products, category) {
-    console.log(products[0])
-    // Use the filter method to create a new array with products of the given category
-    const filteredProducts = products.filter(product => {
-      console.log(product)
-      console.log(category)
-
-      return product.category === category
-    })
-    console.log(filteredProducts)
-    return filteredProducts
-  }
-
   const categories = data.categories.distinct
-  console.log(categories)
   const headerRef = useRef(null)
   //set --header-height" css variable value
   useEffect(() => {
@@ -60,26 +43,21 @@ export default function Navigation() {
       />
       <div className="navigation__inner">
         <div className="navigation__logo">
-          <a href="#" className="navigation__link">
-            Local news
-          </a>
+          <Link to="/" className="navigation__link">
+            <img className="logo" src={logo} />
+          </Link>
         </div>
 
         <nav>
           <ul className="navigation__list">
             {categories.map(category => (
               <li className="navigation__item">
-                <a
-                  href="#"
-                  onClick={() => {
-                    setDisplayedProducts(
-                      filteredProducts(allProducts, category)
-                    )
-                  }}
+                <Link
+                  to={`/${nameToPath(category)}`}
                   className="navigation__link"
                 >
                   {category}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
@@ -87,15 +65,10 @@ export default function Navigation() {
 
         <div className="navigation__toggle">
           <label htmlFor="more" aria-hidden="true" className="navigation__link">
-            More
+            Mas
           </label>
         </div>
       </div>
     </header>
   )
 }
-/* query MyQuery {
-    allProduct {
-      distinct(field: {category: SELECT})
-    }
-  } */

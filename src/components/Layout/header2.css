@@ -6,15 +6,21 @@ body {
   background: #e6e6e6;
   font-family: Helvetica, Arial, sans-serif;
 }
+.logo {
+  width: 2rem;
+  vertical-align: middle;
+}
 .navigation {
   z-index: 1;
   width: 100%;
+  text-transform: uppercase;
   border-bottom: 1px solid #ccc;
   background: #fff;
   height: 50px /* Collapsed navigation height */;
 }
 .navigation__inner {
   display: flex;
+  justify-content: center;
   max-width: 900px;
   height: 50px /* Collapsed navigation height */;
   margin: 0 auto;
@@ -25,7 +31,7 @@ body {
 }
 .navigation__link {
   display: block;
-  padding: 0 20px;
+  padding: 0 10px;
   font-size: 14px;
   line-height: 50px /* Collapsed navigation height */;
   text-decoration: none;
@@ -54,11 +60,7 @@ body {
   border-top: 0;
   border-right: 0;
 }
-@media screen and (max-width: 400px) {
-  .navigation__item {
-    flex-basis: 100% /* Stops uneven wrapping */;
-  }
-}
+
 .navigation__toggle {
   flex-shrink: 0 /* Stops more button collapsing */;
   background: #fff;
@@ -67,14 +69,14 @@ body {
 }
 .navigation__toggle .navigation__link {
   position: relative;
-  padding-right: 50px;
+  padding-right: 20px;
 }
 /* More button arrow */
 .navigation__toggle .navigation__link:after {
   content: "";
   position: absolute;
   top: 22px;
-  right: 20px;
+  right: 5px;
   width: 0;
   height: 0;
   border-style: solid;
