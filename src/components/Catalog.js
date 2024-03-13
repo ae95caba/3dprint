@@ -49,7 +49,7 @@ function Card({ product }) {
   }, [product])
 
   return (
-    <Link to={nameToPath(product.name)}>
+    <Link to={`/${nameToPath(product.name)}`}>
       <div className="card">
         {image}
         <div className="title-container">
