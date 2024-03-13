@@ -3,7 +3,7 @@ import { useRef, useEffect } from "react"
 import "./header2.css"
 import { useStaticQuery, graphql, Link } from "gatsby"
 import { nameToPath } from "../../functions/nameToPath"
-import logo from "./logo.svg"
+import logo from "./logo.png"
 export default function Navigation() {
   const data = useStaticQuery(graphql`
     query {
@@ -53,6 +53,7 @@ export default function Navigation() {
             {categories.map(category => (
               <li className="navigation__item">
                 <Link
+                  activeClassName="active"
                   to={`/${nameToPath(category)}`}
                   className="navigation__link"
                 >

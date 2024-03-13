@@ -18,7 +18,7 @@ module.exports = {
       name: "Andre Espinoza",
       portfolio: "andreespinozadev.netlify.net",
     },
-    copyright: "all rights reserverd",
+    copyright: "Copyright © 2024 | 3D PRINT GOD",
     siteUrl: `https://gatsbystarterdefaultsource.gatsbyjs.io/`,
   },
   plugins: [

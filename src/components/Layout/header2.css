@@ -38,6 +38,10 @@ body {
   color: #000;
   cursor: pointer;
 }
+.navigation__link.active {
+  background-color: black;
+  color: white;
+}
 .navigation__link:hover {
   text-decoration: underline;
 }
