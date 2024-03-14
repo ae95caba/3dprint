@@ -7,7 +7,7 @@ import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import OutsideClickHandler from "react-outside-click-handler"
 import { isMobile } from "react-device-detect"
 import Layout from "../components/Layout/Layout"
-
+import Seo from "../components/seo"
 export default function ProductDetails({ data }) {
   const name = data.product.name
   const images = data.product.images
@@ -90,6 +90,10 @@ export default function ProductDetails({ data }) {
       </main>
     </Layout>
   )
+}
+
+export const Head = ({ data }) => {
+  return <Seo title={data.product.name} />
 }
 
 export const query = graphql`

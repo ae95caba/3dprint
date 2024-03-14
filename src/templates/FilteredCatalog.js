@@ -22,7 +22,10 @@ const FilteredCatalog = ({ data }) => {
  *
  * See: https://www.gatsbyjs.com/docs/reference/built-in-components/gatsby-head/
  */
-export const Head = () => <Seo title="Home2" />
+export const Head = ({ pageContext }) => {
+  console.log(pageContext)
+  return <Seo title={`Catalogo de ${pageContext.category}`} showDefaultTitle />
+}
 
 export default FilteredCatalog
 
