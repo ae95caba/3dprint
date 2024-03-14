@@ -8,7 +8,7 @@
 import * as React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 
-function Seo({ description, title, children, showDefaultTitle }) {
+function Seo({ description, title, children, showDefaultTitle, previewUrl }) {
   const { site } = useStaticQuery(
     graphql`
       query {
@@ -26,6 +26,28 @@ function Seo({ description, title, children, showDefaultTitle }) {
     `
   )
 
+  function isVideoUrl(url) {
+    // Extract the file extension from the URL
+    const fileExtension = url.split(".").pop().toLowerCase()
+
+    // Define an array of video file extensions
+    const videoExtensions = [
+      "mp4",
+      "webm",
+      "ogg",
+      "avi",
+      "mov",
+      "wmv",
+      "flv",
+      "mkv",
+      "m4v",
+      "3gp",
+    ]
+
+    // Check if the file extension is included in the videoExtensions array
+    return videoExtensions.includes(fileExtension)
+  }
+
   const metaDescription = description || site.siteMetadata.description
   const defaultTitle = showDefaultTitle && site.siteMetadata?.title
 
@@ -37,6 +59,12 @@ function Seo({ description, title, children, showDefaultTitle }) {
       <meta property="og:description" content={metaDescription} />
       <meta property="og:type" content="website" />
       <meta name="twitter:card" content="summary" />
+      {previewUrl && (
+        <meta
+          property={`og:${isVideoUrl(previewUrl) ? "video" : "image"}`}
+          content={previewUrl}
+        />
+      )}
       <meta
         name="twitter:creator"
         content={site.siteMetadata?.author.name || ``}

@@ -93,7 +93,12 @@ export default function ProductDetails({ data }) {
 }
 
 export const Head = ({ data }) => {
-  return <Seo title={data.product.name} />
+  return (
+    <Seo
+      title={data.product.name}
+      previewUrl={data.product.images[0].data.publicURL}
+    />
+  )
 }
 
 export const query = graphql`
