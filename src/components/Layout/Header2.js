@@ -1,6 +1,6 @@
 import React from "react"
-import { useRef, useEffect } from "react"
-import "./header2.css"
+import { useRef, useEffect, useState } from "react"
+
 import { useStaticQuery, graphql, Link } from "gatsby"
 import { nameToPath } from "../../functions/nameToPath"
 import logo from "./logo.png"
@@ -14,7 +14,8 @@ export default function Navigation() {
   `)
   const categories = data.categories.distinct
   const headerRef = useRef(null)
-  //set --header-height" css variable value
+
+  //set --header-height" css variable value after the page loads
   useEffect(() => {
     const headerElement = headerRef.current
 

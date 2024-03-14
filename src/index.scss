@@ -12,19 +12,16 @@ $cool-shadow: 0 0 5px rgba(0, 0, 0, 0.502);
   min-height: calc(100vh - var(--header-height));
 }
 :root {
-  --main-bg-color: red;
   --universal-y-padding: 4rem;
   --universal-x-padding: 2rem;
   --header-height: 0px;
 }
 
 body {
-  background-color: var(--main-bg-color);
+  background: #e6e6e6;
+  font-family: Helvetica, Arial, sans-serif;
 }
 
-.carousel-root {
-  max-width: 30rem;
-}
 main > section {
   padding-bottom: var(--universal-y-padding);
   padding-top: var(--universal-y-padding);
@@ -137,6 +134,5 @@ section.details {
 @media (max-width: 500px) {
   :root {
     --universal-y-padding: 2rem;
-    --main-bg-color: blue;
   }
 }
