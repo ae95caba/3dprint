@@ -5,6 +5,9 @@ import { useStaticQuery, graphql, Link } from "gatsby"
 import { nameToPath } from "../../functions/nameToPath"
 import logo from "./logo.png"
 export default function Navigation() {
+  const [listHeight, setListHeight] = useState()
+  const [headerHeight, setHeaderHeight] = useState()
+
   const data = useStaticQuery(graphql`
     query {
       categories: allProduct {
@@ -13,15 +16,18 @@ export default function Navigation() {
     }
   `)
   const categories = data.categories.distinct
-  const headerRef = useRef(null)
 
-  //set --header-height" css variable value after the page loads
+  const headerRef = useRef(null)
+  const listRef = useRef(null)
+
+  //set --header-height css variable and state value after the page loads
   useEffect(() => {
     const headerElement = headerRef.current
 
     const updateHeight = () => {
       if (headerElement) {
         console.log("Header Height:", headerElement.offsetHeight)
+        setHeaderHeight(headerElement.offsetHeight)
         const root = document.documentElement
         root.style.setProperty(
           "--header-height",
@@ -33,6 +39,20 @@ export default function Navigation() {
     // Schedule the code to run after the layout step
     setTimeout(updateHeight, 0)
   }, [])
+  //set list height state value after the page loads and after every window resize
+  useEffect(() => {
+    const putListOffSetHeightValueToState = () => {
+      setListHeight(listRef.current.offsetHeight)
+    }
+
+    setTimeout(putListOffSetHeightValueToState, 0)
+
+    window.addEventListener("resize", putListOffSetHeightValueToState)
+    // remove the event listener before the component gets unmounted
+    return () =>
+      window.removeEventListener("resize", putListOffSetHeightValueToState)
+  }, [])
+
   return (
     <header className="navigation" ref={headerRef}>
       <input
@@ -50,7 +70,7 @@ export default function Navigation() {
         </div>
 
         <nav>
-          <ul className="navigation__list">
+          <ul className="navigation__list" ref={listRef}>
             {categories.map(category => (
               <li className="navigation__item">
                 <Link
@@ -65,11 +85,17 @@ export default function Navigation() {
           </ul>
         </nav>
 
-        <div className="navigation__toggle">
-          <label htmlFor="more" aria-hidden="true" className="navigation__link">
-            Mas
-          </label>
-        </div>
+        {listHeight > headerHeight && (
+          <div className="navigation__toggle">
+            <label
+              htmlFor="more"
+              aria-hidden="true"
+              className="navigation__link"
+            >
+              Mas
+            </label>
+          </div>
+        )}
       </div>
     </header>
   )
