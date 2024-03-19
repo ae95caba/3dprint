@@ -123,34 +123,13 @@ exports.createPages = async ({ graphql, actions }) => {
 
   //////////////////////////////////////////
 
-  // Track encountered names
-  const encounteredNames = {}
-
-  // Iterate through nodes
-  data.pageData.nodes.forEach((node, index) => {
-    const nodeName = node.name
-    let uniquePath = `/${nameToPath(nodeName)}`
-
-    // Check if the name has been encountered before
-    if (encounteredNames[nodeName]) {
-      let version = 2
-      // Increment version until a unique one is found
-      while (encounteredNames[`${nodeName}-v${version}`]) {
-        version++
-      }
-      uniquePath = `/${nameToPath(nodeName)}-v${version}`
-    }
-
-    // Mark the name as encountered
-    encounteredNames[nodeName] = true
-
+  data.pageData.nodes.forEach(node =>
     actions.createPage({
-      path: uniquePath,
+      path: `/${nameToPath(node.name)}`,
       component: path.resolve(`./src/templates/ProductDetails.js`),
       context: { id: node.id },
     })
-  })
-
+  )
   ///////////
 }
 
