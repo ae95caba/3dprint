@@ -59,7 +59,12 @@ function Seo({ description, title, children, showDefaultTitle, previewUrl }) {
       <meta property="og:description" content={metaDescription} />
       <meta property="og:type" content="website" />
       <meta name="twitter:card" content="summary" />
-      {previewUrl && <meta property={`og:image`} content={previewUrl} />}
+      {previewUrl && (
+        <meta
+          property={`og:${isVideoUrl(previewUrl) ? "video" : "image"}`}
+          content={previewUrl}
+        />
+      )}
       <meta
         name="twitter:creator"
         content={site.siteMetadata?.author.name || ``}
