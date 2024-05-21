@@ -56,7 +56,7 @@ exports.sourceNodes = async ({ actions, createNodeId }) => {
     }
 
     // Map into these results and create nodes
-    products.records.forEach(product => {
+    products.forEach(product => {
       // Create your node object
 
       const productNode = {
@@ -73,10 +73,10 @@ exports.sourceNodes = async ({ actions, createNodeId }) => {
 
         // Other fields that you want to query with GraphQL
         createdTime: product.createdTime,
-        name: product.fields.name,
+        name: product.name,
 
-        category: product.fields.category,
-        images: transformImages(product.fields.images),
+        category: product.category,
+        images: product.images,
         // etc...
       }
 
