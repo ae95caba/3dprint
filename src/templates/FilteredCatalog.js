@@ -9,11 +9,9 @@ import Catalog from "../components/Catalog"
 const utmParameters = `?utm_source=starter&utm_medium=start-page&utm_campaign=default-starter`
 
 const FilteredCatalog = ({ data }) => {
-  const products = data.filteredProducts.nodes
-
   return (
     <Layout>
-      <Catalog products={products} />
+      <Catalog products={data.filteredProducts.nodes} />
     </Layout>
   )
 }
@@ -36,12 +34,35 @@ export const query = graphql`
         id
         name
         createdTime
-        images {
-          data {
-            publicURL
-            childImageSharp240: childImageSharp {
-              gatsbyImageData(width: 400)
-            }
+
+        image1 {
+          publicURL
+          childImageSharp240: childImageSharp {
+            gatsbyImageData(width: 400)
+          }
+        }
+        image2 {
+          publicURL
+          childImageSharp240: childImageSharp {
+            gatsbyImageData(width: 400)
+          }
+        }
+        image3 {
+          publicURL
+          childImageSharp240: childImageSharp {
+            gatsbyImageData(width: 400)
+          }
+        }
+        image4 {
+          publicURL
+          childImageSharp240: childImageSharp {
+            gatsbyImageData(width: 400)
+          }
+        }
+        image5 {
+          publicURL
+          childImageSharp240: childImageSharp {
+            gatsbyImageData(width: 400)
           }
         }
       }

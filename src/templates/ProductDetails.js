@@ -10,7 +10,13 @@ import Layout from "../components/Layout/Layout"
 import Seo from "../components/seo"
 export default function ProductDetails({ data }) {
   const name = data.product.name
-  const images = data.product.images
+  let images = []
+  for (let i = 1; i <= 5; i++) {
+    if (data.product[`image${i}`]) {
+      images.push(data.product[`image${i}`])
+    }
+  }
+  console.log(`images arr is ${JSON.stringify(images)}`)
   const [showModal, setShowModal] = useState(false)
   const [modalImage, setModalImage] = useState()
 
@@ -31,9 +37,9 @@ export default function ProductDetails({ data }) {
               swipeable={false}
               renderThumbs={() =>
                 images.map(image => {
-                  if (image.data.childImageSharp90) {
+                  if (image.childImageSharp90) {
                     const img = getImage(
-                      image.data.childImageSharp90.gatsbyImageData
+                      image.childImageSharp90.gatsbyImageData
                     )
                     return <GatsbyImage image={img} />
                   } else
@@ -46,17 +52,15 @@ export default function ProductDetails({ data }) {
                         fetchPriority="low"
                         decoding="async"
                       >
-                        <source src={image.data.publicURL} type="video/webm" />
+                        <source src={image.publicURL} type="video/webm" />
                       </video>
                     )
                 })
               }
             >
               {images.map(image => {
-                if (image.data.childImageSharp) {
-                  const img = getImage(
-                    image.data.childImageSharp.gatsbyImageData
-                  )
+                if (image.childImageSharp) {
+                  const img = getImage(image.childImageSharp.gatsbyImageData)
                   return <GatsbyImage image={img} />
                 } else
                   return (
@@ -68,7 +72,7 @@ export default function ProductDetails({ data }) {
                       fetchPriority="low"
                       decoding="async"
                     >
-                      <source src={image.data.publicURL} type="video/webm" />
+                      <source src={image.publicURL} type="video/webm" />
                     </video>
                   )
               })}
@@ -94,10 +98,7 @@ export default function ProductDetails({ data }) {
 
 export const Head = ({ data }) => {
   return (
-    <Seo
-      title={data.product.name}
-      previewUrl={data.product.images[0].data.publicURL}
-    />
+    <Seo title={data.product.name} previewUrl={data.product.image1.publicURL} />
   )
 }
 
@@ -105,16 +106,60 @@ export const query = graphql`
   query ($id: String) {
     product(id: { eq: $id }) {
       name
-      images {
-        data {
-          childImageSharp {
-            gatsbyImageData
-          }
-          childImageSharp90: childImageSharp {
-            gatsbyImageData(width: 100)
-          }
-          publicURL
+
+      image1 {
+        childImageSharp {
+          gatsbyImageData
         }
+        childImageSharp90: childImageSharp {
+          gatsbyImageData(width: 100)
+        }
+        publicURL
+      }
+      image1 {
+        childImageSharp {
+          gatsbyImageData
+        }
+        childImageSharp90: childImageSharp {
+          gatsbyImageData(width: 100)
+        }
+        publicURL
+      }
+      image2 {
+        childImageSharp {
+          gatsbyImageData
+        }
+        childImageSharp90: childImageSharp {
+          gatsbyImageData(width: 100)
+        }
+        publicURL
+      }
+      image3 {
+        childImageSharp {
+          gatsbyImageData
+        }
+        childImageSharp90: childImageSharp {
+          gatsbyImageData(width: 100)
+        }
+        publicURL
+      }
+      image4 {
+        childImageSharp {
+          gatsbyImageData
+        }
+        childImageSharp90: childImageSharp {
+          gatsbyImageData(width: 100)
+        }
+        publicURL
+      }
+      image5 {
+        childImageSharp {
+          gatsbyImageData
+        }
+        childImageSharp90: childImageSharp {
+          gatsbyImageData(width: 100)
+        }
+        publicURL
       }
     }
   }

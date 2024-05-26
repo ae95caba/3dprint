@@ -32,12 +32,35 @@ export const query = graphql`
         id
         name
         createdTime
-        images {
-          data {
-            publicURL
-            childImageSharp240: childImageSharp {
-              gatsbyImageData(width: 400)
-            }
+
+        image1 {
+          publicURL
+          childImageSharp240: childImageSharp {
+            gatsbyImageData(width: 400)
+          }
+        }
+        image2 {
+          publicURL
+          childImageSharp240: childImageSharp {
+            gatsbyImageData(width: 400)
+          }
+        }
+        image3 {
+          publicURL
+          childImageSharp240: childImageSharp {
+            gatsbyImageData(width: 400)
+          }
+        }
+        image4 {
+          publicURL
+          childImageSharp240: childImageSharp {
+            gatsbyImageData(width: 400)
+          }
+        }
+        image5 {
+          publicURL
+          childImageSharp240: childImageSharp {
+            gatsbyImageData(width: 400)
           }
         }
       }
