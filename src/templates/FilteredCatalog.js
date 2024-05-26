@@ -1,7 +1,7 @@
 import * as React from "react"
 
 import { graphql } from "gatsby"
-
+import { productsFragment } from "../GraphQLFragments/productsFragment"
 import Seo from "../components/seo"
 
 import Layout from "../components/Layout/Layout"
@@ -30,42 +30,7 @@ export default FilteredCatalog
 export const query = graphql`
   query ($category: String) {
     filteredProducts: allProduct(filter: { category: { eq: $category } }) {
-      nodes {
-        id
-        name
-        createdTime
-
-        image1 {
-          publicURL
-          childImageSharp240: childImageSharp {
-            gatsbyImageData(width: 400)
-          }
-        }
-        image2 {
-          publicURL
-          childImageSharp240: childImageSharp {
-            gatsbyImageData(width: 400)
-          }
-        }
-        image3 {
-          publicURL
-          childImageSharp240: childImageSharp {
-            gatsbyImageData(width: 400)
-          }
-        }
-        image4 {
-          publicURL
-          childImageSharp240: childImageSharp {
-            gatsbyImageData(width: 400)
-          }
-        }
-        image5 {
-          publicURL
-          childImageSharp240: childImageSharp {
-            gatsbyImageData(width: 400)
-          }
-        }
-      }
+      ...productsFragment
     }
   }
 `
