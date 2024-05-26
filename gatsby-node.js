@@ -44,24 +44,26 @@ exports.sourceNodes = async ({ actions, createNodeId }) => {
     // Await for results
     const products = await fetchProducts()
 
-    function transformImages(images) {
-      // Use map to create a new array with transformed objects
-      return images.map(image => {
-        // Extract id and url properties from each image object
-        const { id, url } = image
+    function handleImages(product) {
+      const imagesArray = []
 
-        // Return a new object with id and url properties
-        return { id, url }
-      })
+      for (let i = 1; i <= 5; i++) {
+        const fieldName = `image${i}`
+        if (product.hasOwnProperty(fieldName)) {
+          imagesArray.push({ url: product[fieldName], id: `image-${i}` })
+        }
+      }
+      console.log(`imagesArray is ${JSON.stringify(imagesArray)}`)
+      return imagesArray
     }
 
     // Map into these results and create nodes
-    products.records.forEach(product => {
+    products.forEach(product => {
       // Create your node object
 
       const productNode = {
         // Required fields
-        id: `${product.id}`,
+        id: `${product._id}`,
 
         parent: `__SOURCE__`,
         internal: {
@@ -73,10 +75,10 @@ exports.sourceNodes = async ({ actions, createNodeId }) => {
 
         // Other fields that you want to query with GraphQL
         createdTime: product.createdTime,
-        name: product.fields.name,
+        name: product.name,
 
-        category: product.fields.category,
-        images: transformImages(product.fields.images),
+        category: product.category,
+        images: handleImages(product),
         // etc...
       }
 
