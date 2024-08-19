@@ -26,11 +26,9 @@ function Card({ product }) {
   const [image, setImage] = useState()
 
   useEffect(() => {
-    if (product.images[0].data.childImageSharp240) {
+    if (product.image1.childImageSharp240) {
       setImage(
-        <GatsbyImage
-          image={getImage(product.images[0].data.childImageSharp240)}
-        />
+        <GatsbyImage image={getImage(product.image1.childImageSharp240)} />
       )
     } else {
       setImage(
@@ -42,7 +40,7 @@ function Card({ product }) {
           fetchPriority="low"
           decoding="async"
         >
-          <source src={product.images[0].data.publicURL} type="video/webm" />
+          <source src={product.image1.publicURL} type="video/webm" />
         </video>
       )
     }

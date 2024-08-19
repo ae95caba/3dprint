@@ -6,11 +6,13 @@ const { createRemoteFileNode } = require("gatsby-source-filesystem")
 exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
   createTypes(`
     type Product implements Node {
-      images: [Images]
+      image1: File @link(by: "url")
+      image2: File @link(by: "url")
+      image3: File @link(by: "url")
+      image4: File @link(by: "url")
+      image5: File @link(by: "url")
     }
-    type Images {
-     data: File @link(by:"url", from: "url")
-    }
+     
  
   
   `)
@@ -44,26 +46,13 @@ exports.sourceNodes = async ({ actions, createNodeId }) => {
     // Await for results
     const products = await fetchProducts()
 
-    function handleImages(product) {
-      const imagesArray = []
-
-      for (let i = 1; i <= 5; i++) {
-        const fieldName = `image${i}`
-        if (product.hasOwnProperty(fieldName)) {
-          imagesArray.push({ url: product[fieldName], id: `image-${i}` })
-        }
-      }
-      console.log(`imagesArray is ${JSON.stringify(imagesArray)}`)
-      return imagesArray
-    }
-
     // Map into these results and create nodes
     products.forEach(product => {
       // Create your node object
-
+      const { _id, __v, ...copiedProductWithoutId } = product
       const productNode = {
         // Required fields
-        id: `${product._id}`,
+        id: `${_id}`,
 
         parent: `__SOURCE__`,
         internal: {
@@ -72,14 +61,7 @@ exports.sourceNodes = async ({ actions, createNodeId }) => {
           // but it is required
         },
         children: [],
-
-        // Other fields that you want to query with GraphQL
-        createdTime: product.createdTime,
-        name: product.name,
-
-        category: product.category,
-        images: handleImages(product),
-        // etc...
+        ...copiedProductWithoutId,
       }
 
       // Get content digest of node. (Required field)
@@ -143,27 +125,34 @@ exports.onCreateNode = async ({
   createNodeId,
 }) => {
   let gatsbyImageDataNode
-  if (node[`image${i}`]) {
-    const { createNodeField, createNode } = actions
 
-    try {
-      /* Attempt to download the image and create the File node */
-      gatsbyImageDataNode = await createRemoteFileNode({
-        url: node[`image${i}`],
-        parentNodeId: node.id,
-        getCache,
-        createNode,
-        createNodeId,
-        store,
-      })
-      console.log(`Gatsby image data for ${node.name} created!`)
-    } catch (error) {
-      console.error(
-        `Failed to create image data for ${node.name} at ${
-          node[`image${i}`]
-        }: ${error.message}`
-      )
-      // Optionally, you could set a fallback value or handle the error as needed
+  if (node.internal.type === "Product") {
+    const { createNode } = actions
+
+    for (let i = 1; i <= 5; i++) {
+      if (node[`image${i}`]) {
+        const { createNodeField, createNode } = actions
+
+        try {
+          /* Attempt to download the image and create the File node */
+          gatsbyImageDataNode = await createRemoteFileNode({
+            url: node[`image${i}`],
+            parentNodeId: node.id,
+            getCache,
+            createNode,
+            createNodeId,
+            store,
+          })
+          console.log(`Gatsby image data for ${node.name} created!`)
+        } catch (error) {
+          console.error(
+            `Failed to create image data for ${node.name} at ${
+              node[`image${i}`]
+            }: ${error.message}`
+          )
+          // Optionally, you could set a fallback value or handle the error as needed
+        }
+      }
     }
   }
 }

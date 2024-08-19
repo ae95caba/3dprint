@@ -1,7 +1,7 @@
 import * as React from "react"
 
 import { graphql } from "gatsby"
-
+import { productsFragment } from "../GraphQLFragments/productsFragment"
 import Seo from "../components/seo"
 import "../index.scss"
 import Layout from "../components/Layout/Layout"
@@ -28,19 +28,7 @@ export default IndexPage
 export const query = graphql`
   query {
     products: allProduct {
-      nodes {
-        id
-        name
-        createdTime
-        images {
-          data {
-            publicURL
-            childImageSharp240: childImageSharp {
-              gatsbyImageData(width: 400)
-            }
-          }
-        }
-      }
+      ...productsFragment
     }
   }
 `
