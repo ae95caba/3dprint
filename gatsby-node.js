@@ -143,25 +143,27 @@ exports.onCreateNode = async ({
   createNodeId,
 }) => {
   let gatsbyImageDataNode
-  if (node.internal.type === "Product") {
-    const { createNode } = actions
+  if (node[`image${i}`]) {
+    const { createNodeField, createNode } = actions
 
-    for (const image of node.images) {
-      const { createNodeField, createNode } = actions
-
-      /* Download the image and create the File node. Using gatsby-plugin-sharp and gatsby-transformer-sharp the node will become an ImageSharp. */
+    try {
+      /* Attempt to download the image and create the File node */
       gatsbyImageDataNode = await createRemoteFileNode({
-        url: image.url,
-        parentNodeId: node.id, // id of the parent node of the fileNode you are going to create
-        /*    store, // Gatsby's redux store */
-        getCache, // get Gatsby's cache
-        createNode, // helper function in gatsby-node to generate the node
-        createNodeId, // helper function in gatsby-node to generate the node id
-
+        url: node[`image${i}`],
+        parentNodeId: node.id,
+        getCache,
+        createNode,
+        createNodeId,
         store,
       })
-      console.log(`gastby image data for ${node.name} created !`)
-      ////////////////////////////////////////////////////////////////////////
+      console.log(`Gatsby image data for ${node.name} created!`)
+    } catch (error) {
+      console.error(
+        `Failed to create image data for ${node.name} at ${
+          node[`image${i}`]
+        }: ${error.message}`
+      )
+      // Optionally, you could set a fallback value or handle the error as needed
     }
   }
 }
